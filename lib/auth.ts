@@ -1,6 +1,8 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./db";
+import { emailOTP } from "better-auth/plugins"
+import { resend } from "./resend";
 // import { env } from "./env";
 
 export const auth = betterAuth({
@@ -13,4 +15,16 @@ export const auth = betterAuth({
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string, 
         }, 
     }, 
+    plugins: [
+        emailOTP({ 
+            async sendVerificationOTP({ email, otp, type}) { 
+                await resend.emails.send({
+                    from: 'LMS <onboarding@resend.dev>',
+                    to: [email],
+                    subject: 'LMS - Verification Your Email',
+                    html: `<p>Your OTP is <strong>${otp}</strong></p>`,
+                });
+            }, 
+        }) 
+    ],
 })
