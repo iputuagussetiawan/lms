@@ -13,6 +13,7 @@ import slugify from 'slugify'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { fi } from 'zod/v4/locales'
+import RichTextEditor from '@/components/rich-text-editor/Editor'
 
 const CreateCoursePage = () => {
     // 1. Define your form.
@@ -121,7 +122,8 @@ const CreateCoursePage = () => {
                                     <FormItem>
                                         <FormLabel>Description</FormLabel>
                                         <FormControl>
-                                            <Textarea className='min-h-[120px]' placeholder="Description" {...field} />
+                                            <RichTextEditor field={field}/>
+                                            {/* <Textarea className='min-h-[120px]' placeholder="Description" {...field} /> */}
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -130,7 +132,7 @@ const CreateCoursePage = () => {
 
                             <FormField
                                 control={form.control}
-                                name="description"
+                                name="imageUrl"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Thumbnail Image</FormLabel>

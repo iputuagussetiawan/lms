@@ -47,7 +47,7 @@ export function UserDropdown({name, email, image}: UserDropdownProps) {
                 />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="max-w-64">
+            <DropdownMenuContent align="end" className="min-w-w48">
                 <DropdownMenuLabel className="flex min-w-0 flex-col">
                     <span className="text-foreground truncate text-sm font-medium">
                         {name}
