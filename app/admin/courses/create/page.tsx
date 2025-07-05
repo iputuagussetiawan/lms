@@ -14,6 +14,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { fi } from 'zod/v4/locales'
 import RichTextEditor from '@/components/rich-text-editor/Editor'
+import Uploader from '@/components/file-uploader/Uploader'
 
 const CreateCoursePage = () => {
     // 1. Define your form.
@@ -132,12 +133,13 @@ const CreateCoursePage = () => {
 
                             <FormField
                                 control={form.control}
-                                name="imageUrl"
+                                name="fileKey"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Thumbnail Image</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Thumbnail url" {...field} />
+                                            <Uploader/>
+                                            {/* <Input placeholder="Thumbnail url" {...field} /> */}
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
