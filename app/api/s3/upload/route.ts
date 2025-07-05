@@ -37,7 +37,7 @@ export async function POST(request: Request) {
 
         const response={
             presignedUrl,
-            Key:uniqueFileName
+            key:uniqueFileName
         }
         return NextResponse.json(response)
 
