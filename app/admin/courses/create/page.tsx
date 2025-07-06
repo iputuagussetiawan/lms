@@ -2,21 +2,27 @@
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { courseCategories, courseLevels, courseSchema, courseSchemaType, courseStatus } from '@/lib/zodSchemas'
-import { ArrowLeft, PlusIcon, SparkleIcon } from 'lucide-react'
+import { ArrowLeft, Loader2, PlusIcon, SparkleIcon } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useTransition } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import slugify from 'slugify'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { fi } from 'zod/v4/locales'
 import RichTextEditor from '@/components/rich-text-editor/Editor'
 import Uploader from '@/components/file-uploader/Uploader'
+import { tryCatch } from '@/hooks/try-catch'
+import { CreateCourse } from './actions'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 const CreateCoursePage = () => {
+
+    const [isPending, startTransition] = useTransition();
+    const router=useRouter()
     // 1. Define your form.
     const form = useForm<courseSchemaType>({
         resolver: zodResolver(courseSchema),
@@ -39,6 +45,23 @@ const CreateCoursePage = () => {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values)
+
+        startTransition(async() => {
+            const {data:result, error} =await tryCatch(CreateCourse(values))
+
+            if(error){
+                toast.error("Failed to create course");
+                return;
+            }
+
+            if(result.status==="success"){
+                toast.success(result.message);
+                form.reset();
+                router.push("/admin/courses");
+            }else if(result.status==="error"){
+                toast.error(result.message);
+            }
+        })
     }
     
     return (
@@ -260,7 +283,23 @@ const CreateCoursePage = () => {
                                         </FormItem>
                                     )}
                                 />
-                            <Button type="submit">Create Course <PlusIcon className='ml-1' size={16}/></Button>
+                            <Button 
+                                disabled={isPending}
+                                type="submit"
+                            >
+                                {isPending ? (
+                                    <>
+                                        Creating...
+                                        <Loader2 className='ml-1 h-4 w-4 animate-spin'/>
+                                    </>
+                                ): (
+                                    <>
+                                        Create Course 
+                                        <PlusIcon className='ml-1' size={16}/>
+                                    </>
+                                    )
+                                }
+                            </Button>
                         </form>
                     </Form>
                 </CardContent>
