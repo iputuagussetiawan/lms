@@ -1,9 +1,10 @@
-import "server-only";
+
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./db";
 import { emailOTP } from "better-auth/plugins"
 import { resend } from "./resend";
+import { admin } from "better-auth/plugins"
 // import { env } from "./env";
 
 export const auth = betterAuth({
@@ -26,6 +27,7 @@ export const auth = betterAuth({
                     html: `<p>Your OTP is <strong>${otp}</strong></p>`,
                 });
             }, 
-        }) 
+        }),
+        admin()
     ],
 })
