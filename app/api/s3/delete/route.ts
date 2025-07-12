@@ -43,7 +43,7 @@ export async function DELETE(request : Request){
         }
 
         const command= new DeleteObjectCommand({
-            Bucket:process.env.AWS_S3_BUCKET_NAME,
+            Bucket:process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME,
             Key:key
         })
 

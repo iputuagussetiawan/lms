@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { RenderEmptyState, RenderErrorState, RenderUploadedState, RenderUploadingState } from './RenderState';
 import { toast } from 'sonner';
 import {v4 as uuidv4} from 'uuid'
+import { useConstructsUrl } from '@/hooks/use-constructs-url';
 
 interface UploaderState{
     id:string | null,
@@ -26,6 +27,7 @@ interface UploaderProps{
 }
 
 const Uploader = ({onChange, value}:UploaderProps) => {
+    const fileUrl=useConstructsUrl(value || "");
     const [fileState, setFileState] = useState<UploaderState>({
         error: false,
         file: null,
@@ -34,7 +36,8 @@ const Uploader = ({onChange, value}:UploaderProps) => {
         progress: 0,
         isDeleting: false,
         fileType:"image",
-        key:value
+        key:value,
+        objectUrl:fileUrl
     });
     const onDrop = useCallback((acceptedFiles:File[]) => {
         // Do something with the files
