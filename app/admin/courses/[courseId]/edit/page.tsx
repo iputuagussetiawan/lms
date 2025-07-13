@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import React from 'react'
 import { EditCourseForm } from './_components/EditCourseForm';
+import CourseStructure from './_components/CourseStructure';
 
 type Params = Promise<{courseId:string}>
 const EditCoursePage = async ({params}:{params:Params}) => {
@@ -20,14 +21,24 @@ const EditCoursePage = async ({params}:{params:Params}) => {
                     <Card>
                         <CardHeader>
                             <CardTitle>Basic Info</CardTitle>
-                            <CardDescription>Edit basic infromation about the course.</CardDescription>
+                            <CardDescription>Edit basic information about the course.</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <EditCourseForm data={data}/>
                         </CardContent>
                     </Card>
                 </TabsContent>
-                <TabsContent value="course-structure">Change your password here.</TabsContent>
+                <TabsContent value="course-structure">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Course Structure</CardTitle>
+                            <CardDescription>Edit the structure of the course</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <CourseStructure data={data} />
+                        </CardContent>
+                    </Card>
+                </TabsContent>
             </Tabs>
         </div>
     )
