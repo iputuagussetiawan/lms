@@ -18,6 +18,8 @@ import Link from 'next/link';
 import { listeners, title } from 'process';
 import React, { ReactNode, useState } from 'react'
 import { Chevron } from 'react-day-picker';
+import { toast } from 'sonner';
+import { set } from 'zod';
 
 interface CourseStructureProps {
     data:AdminCourseSingularType;
@@ -34,7 +36,6 @@ interface SortableItemProps {
 }
 
 const CourseStructure = ({data}:CourseStructureProps) => {
-
     const initialItems=data.chapter.map((chapter)=>({
         id:chapter.id,
         title:chapter.title,
@@ -75,16 +76,108 @@ const CourseStructure = ({data}:CourseStructureProps) => {
     }
     function handleDragEnd(event) {
         const {active, over} = event;
-        
-        if (active.id !== over.id) {
-        setItems((items) => {
-            const oldIndex = items.indexOf(active.id);
-            const newIndex = items.indexOf(over.id);
-            
-            return arrayMove(items, oldIndex, newIndex);
-        });
+
+        if(!over || active.id===over.id){
+            return
         }
+        const activeId=active.id;
+        const overId=over.id;
+        const activeType=active.data.current?.type as "chapter"|"lesson";
+        const overType=active.data.current?.type as "chapter"|"lesson";
+        const courseId=data.id;
+
+        if(activeType==='chapter'){
+            let targetChapterId=null;
+
+            if(overType==='chapter'){
+                targetChapterId=overId;
+            }else if(overType==='lesson'){
+                targetChapterId=overId.data.current?.chapterId ?? null;
+            }
+
+            if(!targetChapterId){
+                toast.error("Could not determine the chapter for reordering");
+                return;
+            }
+
+            const oldIndex=items.findIndex((item)=>item.id===activeId);
+            const newIndex=items.findIndex((item)=>item.id===targetChapterId);
+
+            if(oldIndex===-1 || newIndex===-1){
+                toast.error("Could not determine the chapter for reordering");
+                return;
+            }
+
+            const reorderedLocalChapters=arrayMove(items, oldIndex, newIndex);
+            const updatedChapterForState=reorderedLocalChapters.map(
+                (chapter, index)=>({
+                    ...chapter,
+                    order:index + 1,
+                })
+            );
+            const  previousItems=[...items];
+            setItems(updatedChapterForState);
+        }
+
+        // if(activeType==='lesson' && overType==='lesson'){
+        //     const chapterId=active.data.current?.chapterId;
+        //     const overChapterId=over.data.current?.chapterId;
+
+        //     if(!chapterId || chapterId!==overChapterId){
+        //         toast.error("Lesson move between different or invalid chapter Id is not allowed");
+        //         return;
+        //     }
+
+        //     const chapterIndex=items.findIndex(
+        //         (chapter)=>chapter.id===chapterId
+        //     );
+
+        //     if(chapterIndex===-1){
+        //         toast.error("Could not find chapter for lesson ");
+        //         return;
+        //     }
+
+        //     const chapterToUpdate=items[chapterIndex];
+
+        //     const oldLessonIndex=chapterToUpdate.lessons.findIndex(
+        //         (lesson)=>lesson.id===activeId
+        //     );
+
+        //     const newLessonIndex=chapterToUpdate.lessons.findIndex(
+        //         (lesson)=>lesson.id===overId
+        //     );
+
+        //     if(oldLessonIndex===-1 || newLessonIndex===-1){
+        //         toast.error("Could not find lesson for reordering");
+        //         return;
+        //     }
+
+        //     const reorderedLessons=arrayMove(
+        //         chapterToUpdate.lessons,
+        //         oldLessonIndex,
+        //         newLessonIndex
+        //     );            
+
+        //     const updatedLessonForState=reorderedLessons.map(
+        //         (lesson, index)=>({
+        //             ...lesson,
+        //             order:index + 1,
+        //         })
+        //     );
+
+        //     const newItems=[...items];
+
+        //     newItems[chapterIndex]={
+        //         ...chapterToUpdate,
+        //         lessons:updatedLessonForState,
+        //     };
+
+        //     const previousItems=[...items]; 
+        //     setItems(newItems);
+            
+        // }
     }
+    
 
     function toggleChapter(chapterId:string) {
         setItems(
