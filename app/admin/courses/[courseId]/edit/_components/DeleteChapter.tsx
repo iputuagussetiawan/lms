@@ -2,25 +2,25 @@ import { Alert } from "@/components/ui/alert";
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { tryCatch } from "@/hooks/try-catch";
-import { Loader2, Trash2, X } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { useState, useTransition } from "react";
-import { deleteLesson } from "../action";
+import { deleteChapter, deleteLesson } from "../action";
 import { toast } from "sonner";
 
-export function DeleteLesson({
+export function DeleteChapter({
     chapterId,
-    courseId,
-    lessonId
+    courseId
 }:{
     chapterId:string,
-    courseId:string,
-    lessonId:string
+    courseId:string
 }) {
     const [open,setOpen] = useState(false);
     const [pending, startTransition] = useTransition();
     async function onSubmit(){
         startTransition(async() => {
-            const {data:result,error}=await tryCatch(deleteLesson({chapterId,courseId,lessonId}));
+            const {data:result,error}=await tryCatch(
+                deleteChapter({chapterId,courseId})
+            );
             if(error){
                 toast.error("An unexpected error occurred. Please try again later.");
                 return;
@@ -37,14 +37,14 @@ export function DeleteLesson({
         <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild>
                 <Button variant={"ghost"} size={"icon"}>
-                    <X className="size-4" />
+                    <Trash2 className="size-4" />
                 </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete the lesson and remove it from the course.
+                        This action cannot be undone. This will permanently delete the chapter.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

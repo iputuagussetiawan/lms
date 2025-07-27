@@ -13,7 +13,7 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ChevronDown, ChevronRight, FileText, GripVertical, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronRight, Delete, FileText, GripVertical, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { listeners, title } from 'process';
 import React, { ReactNode, use, useEffect, useState } from 'react'
@@ -24,6 +24,7 @@ import { reorderChapters, reorderLessons } from '../action';
 import { NewChapterModal } from './NewChapterModal';
 import { NewLessonModal } from './NewLessonModal';
 import { DeleteLesson } from './DeleteLesson';
+import { DeleteChapter } from './DeleteChapter';
 
 interface CourseStructureProps {
     data:AdminCourseSingularType;
@@ -308,9 +309,7 @@ const CourseStructure = ({data}:CourseStructureProps) => {
                                                     </CollapsibleTrigger>
                                                     <p className='cursor-pointer hover:text-primary pl-2'>{item.title}</p>
                                                 </div>
-                                                <Button size={"icon"} variant={"ghost"}>
-                                                    <Trash2 className="h-4 w-4"/>
-                                                </Button>
+                                                <DeleteChapter chapterId={item.id} courseId={data.id}/>
                                             </div>
                                             <CollapsibleContent>
                                                 <div className='p-1'>

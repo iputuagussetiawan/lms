@@ -341,3 +341,82 @@ export async function deleteLesson({
         }
     }
 }
+
+export async function deleteChapter({
+    chapterId,
+    courseId,
+}:{
+    chapterId:string,
+    courseId:string,
+}):Promise<APIResponse>{
+    await requireAdmin();
+    try{
+        const courseWithChapters=await prisma.course.findFirst({
+            where: {
+                id:courseId,
+            }, 
+            select: {
+                chapter:{
+                    orderBy: {
+                        position: "asc"
+                    },
+                    select: {
+                        id: true,
+                        position: true
+                    }
+                }
+            }
+        })
+
+        if(!courseWithChapters){
+            return{
+                status:"error",
+                message:"Course not found"
+            }
+        }
+
+        const chapters=courseWithChapters.chapter;
+        const chapterToDelete=chapters.find((chapter)=>chapter.id===chapterId);
+
+        if(!chapterToDelete){
+            return{
+                status:"error",
+                message:"Chapter not found in course"
+            }
+        }
+
+        const remainingChapter=chapters.filter((chapter)=>chapter.id!==chapterId);
+
+        const updates=remainingChapter.map((chapter, index) => {
+            return prisma.chapter.update({
+                where: {
+                    id: chapter.id
+                },
+                data: {
+                    position: index + 1
+                }
+            })
+        })
+
+        await prisma.$transaction([
+            ...updates,
+            prisma.chapter.delete({
+                where: {
+                    id: chapterId,
+                }
+            })
+        ]);
+
+        revalidatePath(`/admin/courses/${courseId}/edit`);
+        return {
+            status:"success",
+            message:"Chapter deleted and positions reordered successfully"
+        }
+
+    }catch{
+        return{
+            status:"error",
+            message:"Failed to delete chapter"
+        }
+    }
+}
