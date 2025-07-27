@@ -22,6 +22,9 @@ export async function adminGetCourse(id:string){
             slug:true,
             category: true,
             chapter: {
+                orderBy: {
+                    position: "asc", // ✅ order chapters by position
+                },
                 select: {
                     id: true,
                     title: true,
