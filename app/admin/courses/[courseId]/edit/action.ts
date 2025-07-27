@@ -2,7 +2,7 @@
 import { requireAdmin } from "@/app/data/admin/require-admin";
 import { prisma } from "@/lib/db";
 import { APIResponse } from "@/lib/types";
-import { chapterSchema, chapterSchemaType, courseSchema, courseSchemaType } from "@/lib/zodSchemas";
+import { chapterSchema, chapterSchemaType, courseSchema, courseSchemaType, lessonSchema, lessonSchemaType } from "@/lib/zodSchemas";
 import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet"
 import { request } from "@arcjet/next";
 import { tryCatch } from "@/hooks/try-catch";
@@ -207,6 +207,54 @@ export async function createChapter(values:chapterSchemaType):Promise<APIRespons
         return{
             status:"error",
             message:"Failed to create chapter"
+        }
+    }
+}
+
+export async function createLesson(values:lessonSchemaType):Promise<APIResponse>{
+    await requireAdmin();
+    try{
+        const result=lessonSchema.safeParse(values)
+        if(!result.success){
+            return {
+                status:"error", 
+                message:"Invalid Form Data"
+            };
+        }
+        await prisma.$transaction(async (tx) => {
+            const maxPosition=await tx.lesson.findFirst({
+                where: {
+                    chapterId:result.data.chapterId
+                },
+                select: {
+                    position: true
+                },
+                orderBy: {
+                    position: "desc"
+                }
+            })
+
+            await tx.lesson.create({
+                data: {
+                    title: result.data.name,
+                    description: result.data.description,
+                    videoKey: result.data.videoKey,
+                    thumbnailKey: result.data.thumbnailKey,
+                    chapterId: result.data.chapterId,
+                    position: (maxPosition?.position ?? 0) + 1,
+                }
+            })
+        })
+
+        revalidatePath(`/admin/courses/${result.data.courseId}/edit`);
+        return {
+            status:"success",
+            message:"Lesson created successfully"
+        }
+    }catch{
+        return{
+            status:"error",
+            message:"Failed to create lesson"
         }
     }
 }

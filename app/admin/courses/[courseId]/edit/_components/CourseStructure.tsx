@@ -22,6 +22,7 @@ import { toast } from 'sonner';
 import { set } from 'zod';
 import { reorderChapters, reorderLessons } from '../action';
 import { NewChapterModal } from './NewChapterModal';
+import { NewLessonModal } from './NewLessonModal';
 
 interface CourseStructureProps {
     data:AdminCourseSingularType;
@@ -344,9 +345,7 @@ const CourseStructure = ({data}:CourseStructureProps) => {
                                                         ))}
                                                     </SortableContext>
                                                     <div className='p-2'>
-                                                        <Button className='w-full' variant={"outline"}>
-                                                            Create New Lesson
-                                                        </Button>
+                                                        <NewLessonModal courseId={data.id} chapterId={item.id}/>
                                                     </div>
                                                 </div>
                                             </CollapsibleContent>
