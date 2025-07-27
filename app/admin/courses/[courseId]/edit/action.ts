@@ -7,6 +7,7 @@ import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet"
 import { request } from "@arcjet/next";
 import { tryCatch } from "@/hooks/try-catch";
 import { revalidatePath } from "next/cache";
+import { tr } from "zod/v4/locales";
 
 
 const aj=arcjet.withRule(
@@ -255,6 +256,88 @@ export async function createLesson(values:lessonSchemaType):Promise<APIResponse>
         return{
             status:"error",
             message:"Failed to create lesson"
+        }
+    }
+}
+
+export async function deleteLesson({
+    chapterId,
+    courseId,
+    lessonId
+}:{
+    chapterId:string,
+    courseId:string,
+    lessonId:string
+}):Promise<APIResponse>{
+    await requireAdmin();
+    try{
+        const chapterWithLessons=await prisma.chapter.findFirst({
+            where: {
+                id:chapterId,
+            }, 
+            select: {
+                lessons:{
+                    orderBy: {
+                        position: "asc"
+                    },
+                    select: {
+                        id: true,
+                        position: true
+                    }
+                }
+            }
+        })
+
+        if(!chapterWithLessons){
+            return{
+                status:"error",
+                message:"Chapter not found"
+            }
+        }
+
+        const lessons=chapterWithLessons.lessons;
+        const lessonToDelete=lessons.find((lesson)=>lesson.id===lessonId);
+
+        if(!lessonToDelete){
+            return{
+                status:"error",
+                message:"Lesson not found in chapter"
+            }
+        }
+
+        const remainingLessons=lessons.filter((lesson)=>lesson.id!==lessonId);
+
+        const updates=remainingLessons.map((lesson, index) => {
+            return prisma.lesson.update({
+                where: {
+                    id: lesson.id
+                },
+                data: {
+                    position: index + 1
+                }
+            })
+        })
+
+        await prisma.$transaction([
+            ...updates,
+            prisma.lesson.delete({
+                where: {
+                    id: lessonId,
+                    chapterId: chapterId
+                }
+            })
+        ]);
+
+        revalidatePath(`/admin/courses/${courseId}/edit`);
+        return {
+            status:"success",
+            message:"Lesson deleted and positions reordered successfully"
+        }
+
+    }catch{
+        return{
+            status:"error",
+            message:"Failed to delete lesson"
         }
     }
 }

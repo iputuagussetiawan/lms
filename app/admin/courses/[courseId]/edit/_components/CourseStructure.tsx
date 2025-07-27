@@ -23,6 +23,7 @@ import { set } from 'zod';
 import { reorderChapters, reorderLessons } from '../action';
 import { NewChapterModal } from './NewChapterModal';
 import { NewLessonModal } from './NewLessonModal';
+import { DeleteLesson } from './DeleteLesson';
 
 interface CourseStructureProps {
     data:AdminCourseSingularType;
@@ -336,9 +337,11 @@ const CourseStructure = ({data}:CourseStructureProps) => {
                                                                             <FileText className="h-4 w-4"/>
                                                                             <Link href={`/admin/courses/${data.id}/${item.id}/${lesson.id}`}>{lesson.title}</Link>
                                                                         </div>
-                                                                        <Button variant={"ghost"} size={"icon"}>
-                                                                            <Trash2 className="h-4 w-4"/>
-                                                                        </Button>
+                                                                        <DeleteLesson 
+                                                                            chapterId={item.id}  
+                                                                            courseId={data.id} 
+                                                                            lessonId={lesson.id}
+                                                                        />
                                                                     </div>
                                                                 )}
                                                             </SortableItem>
