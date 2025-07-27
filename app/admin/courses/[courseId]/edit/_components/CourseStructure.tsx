@@ -21,6 +21,7 @@ import { Chevron } from 'react-day-picker';
 import { toast } from 'sonner';
 import { set } from 'zod';
 import { reorderChapters, reorderLessons } from '../action';
+import { NewChapterModal } from './NewChapterModal';
 
 interface CourseStructureProps {
     data:AdminCourseSingularType;
@@ -273,6 +274,7 @@ const CourseStructure = ({data}:CourseStructureProps) => {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between border-b border-border">
                     <CardTitle>Chapters</CardTitle>
+                    <NewChapterModal courseId={data.id}/>
                 </CardHeader>
                 <CardContent className='space-y-8'>
                     <SortableContext items={items} strategy={verticalListSortingStrategy}>
