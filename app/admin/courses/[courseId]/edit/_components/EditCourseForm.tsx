@@ -146,7 +146,7 @@ export function EditCourseForm({data}: EditCourseFormProps) {
                         <FormItem>
                             <FormLabel>Thumbnail Image</FormLabel>
                             <FormControl>
-                                <Uploader onChange={field.onChange} value={field.value}/>
+                                <Uploader fileTypeAccepted='image' onChange={field.onChange} value={field.value}/>
                                 {/* <Input placeholder="Thumbnail url" {...field} /> */}
                             </FormControl>
                             <FormMessage />

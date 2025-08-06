@@ -161,8 +161,7 @@ const CreateCoursePage = () => {
                                     <FormItem>
                                         <FormLabel>Thumbnail Image</FormLabel>
                                         <FormControl>
-                                            <Uploader onChange={field.onChange} value={field.value}/>
-                                            {/* <Input placeholder="Thumbnail url" {...field} /> */}
+                                            <Uploader fileTypeAccepted='image' onChange={field.onChange} value={field.value}/>
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
