@@ -7,13 +7,17 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { tryCatch } from "@/hooks/try-catch";
 import { lessonSchema, lessonSchemaType } from "@/lib/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Arrow } from "@radix-ui/react-select";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2, PlusIcon } from "lucide-react";
 import Link from "next/link";
+import { startTransition, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { fi } from "zod/v4/locales";
+import { updateLesson } from "../actions";
 
 interface LessonFormProps {
     data: AdminLessonType;
@@ -22,6 +26,7 @@ interface LessonFormProps {
 }
 
 export function LessonForm({chapterId, data, courseId}: LessonFormProps) {
+    const [pending, startTransition] = useTransition();
     // 1. Define your form.
     const form = useForm<lessonSchemaType>({
         resolver: zodResolver(lessonSchema),
@@ -34,6 +39,28 @@ export function LessonForm({chapterId, data, courseId}: LessonFormProps) {
             thumbnailKey: data.thumbnailKey ?? undefined
         },
     })
+
+   function onSubmit(values: lessonSchemaType) {
+        
+          // Do something with the form values.
+          // ✅ This will be type-safe and validated.
+        console.log(values)
+
+        startTransition(async() => {
+            const {data:result, error} =await tryCatch(updateLesson(values, data.id))
+
+            if(error){
+                toast.error("Failed to create course");
+                return;
+            }
+
+            if(result.status==="success"){
+                toast.success(result.message);
+            }else if(result.status==="error"){
+                toast.error(result.message);
+            }
+        })
+    }
     return (
         <div>
             <Link className={buttonVariants({ variant: 'outline', className: 'mb-6' })} href={`/admin/courses/${courseId}/edit`}>
@@ -47,7 +74,7 @@ export function LessonForm({chapterId, data, courseId}: LessonFormProps) {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form className="space-y-6">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             <FormField
                                 control={form.control}
                                 name="name"
@@ -100,7 +127,22 @@ export function LessonForm({chapterId, data, courseId}: LessonFormProps) {
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit">Save Lesson</Button>
+                            <Button 
+                                disabled={pending}
+                                type="submit"
+                            >
+                                {pending ? (
+                                    <>
+                                        Saving...
+                                        <Loader2 className='ml-1 h-4 w-4 animate-spin'/>
+                                    </>
+                                ): (
+                                    <>
+                                        Save Lesson 
+                                    </>
+                                    )
+                                }
+                            </Button>
                         </form>
                     </Form>
                 </CardContent>
