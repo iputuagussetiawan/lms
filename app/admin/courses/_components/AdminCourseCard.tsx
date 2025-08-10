@@ -41,7 +41,7 @@ const AdminCourseCard = ({data}: AdminCourseCardProps) => {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
                             <Link 
-                                href={`admin/courses/${data.id}/delete`} 
+                                href={`/admin/courses/${data.id}/delete`} 
                             >
                                 <Trash2 className='size-4 mr-2 text-destructive' /> Delete Course
                             </Link>

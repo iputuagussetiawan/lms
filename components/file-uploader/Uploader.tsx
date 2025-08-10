@@ -330,7 +330,7 @@ const Uploader = ({onChange, value, fileTypeAccepted}:UploaderProps) => {
         accept:fileTypeAccepted==='video'? {"video/*":[]}:{"image/*":[]},
         maxFiles:1,
         multiple:false,
-        maxSize:fileTypeAccepted==='video'? 10*1024*1024:1*1024*1024,
+        maxSize:fileTypeAccepted==='video'? 5000*1024*1024:1*1024*1024,
         onDropRejected: rejectedFiles,
         disabled:fileState.uploading || !!fileState.objectUrl
     })
