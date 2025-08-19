@@ -20,7 +20,6 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
 const CreateCoursePage = () => {
-
     const [isPending, startTransition] = useTransition();
     const router=useRouter()
     // 1. Define your form.
