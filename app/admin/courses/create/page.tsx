@@ -18,10 +18,12 @@ import { tryCatch } from '@/hooks/try-catch'
 import { CreateCourse } from './actions'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { useConfetti } from '@/hooks/use-confetti'
 
 const CreateCoursePage = () => {
     const [isPending, startTransition] = useTransition();
     const router=useRouter()
+    const {triggerConfetti}=useConfetti()
     // 1. Define your form.
     const form = useForm<courseSchemaType>({
         resolver: zodResolver(courseSchema),
@@ -42,8 +44,7 @@ const CreateCoursePage = () => {
     // 2. Define a submit handler.
     function onSubmit(values: courseSchemaType) {
         // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+        // ✅ This will be type-safe and validated
 
         startTransition(async() => {
             const {data:result, error} =await tryCatch(CreateCourse(values))
@@ -55,6 +56,7 @@ const CreateCoursePage = () => {
 
             if(result.status==="success"){
                 toast.success(result.message);
+                triggerConfetti();
                 form.reset();
                 router.push("/admin/courses");
             }else if(result.status==="error"){
