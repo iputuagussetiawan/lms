@@ -3,12 +3,11 @@ import { adminGetCourses } from '@/app/data/admin/admin-get-courses';
 import { buttonVariants } from '@/components/ui/button'
 import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
-import AdminCourseCard from './_components/AdminCourseCard';
+import React, { Suspense } from 'react'
+import AdminCourseCard, { AdminCourseCardSkelton } from './_components/AdminCourseCard';
 import { EmptyState } from '@/components/general/EmptyState';
 
 export default async function CoursesPage(){
-    const data=await adminGetCourses();
     return (
         <> 
             <div className='flex items-center justify-between'>
@@ -20,7 +19,17 @@ export default async function CoursesPage(){
             <div>
                 <p>Here you can create and manage your courses</p>
             </div>
+            <Suspense fallback={<AdminCourseCardSkeletonLayout/>}>
+                <RenderCourses />
+            </Suspense>
+        </>
+    )
+}
 
+async function RenderCourses(){
+    const data=await adminGetCourses();
+    return(
+        <>
             {data.length===0?(
                 <EmptyState 
                     title='No Courses Found' 
@@ -36,5 +45,16 @@ export default async function CoursesPage(){
                 </div>
             )}
         </>
-        )
-    }
+    )
+}
+
+
+function AdminCourseCardSkeletonLayout() {
+    return (
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7'>
+            {Array.from({ length: 3 }).map((_, index) => (
+                <AdminCourseCardSkelton key={index} />
+            ))}
+        </div>
+    )
+}
