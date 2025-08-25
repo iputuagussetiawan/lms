@@ -1,13 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
-import { generateHTML } from "@tiptap/react";
-import { type JSONContent } from "tiptap/react";
+import { generateHTML } from "@tiptap/html";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import parse from "html-react-parser";
 
-export function RenderDescription({json}:{json:JSONContent}) {
+export function RenderDescription({json}:{json:any}) {
     const output=useMemo(()=>{
         return generateHTML(json,[
             StarterKit,
