@@ -2,6 +2,7 @@ import { AdminCourseType } from '@/app/data/admin/admin-get-courses'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useConstructsUrl } from '@/hooks/use-constructs-url'
 import { ArrowRight, ArrowRightIcon, Eye, MoreVerticalIcon, PencilIcon, School, TimerIcon, Trash2 } from 'lucide-react'
 import Image from 'next/image'
@@ -41,7 +42,7 @@ const AdminCourseCard = ({data}: AdminCourseCardProps) => {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
                             <Link 
-                                href={`admin/courses/${data.id}/delete`} 
+                                href={`/admin/courses/${data.id}/delete`} 
                             >
                                 <Trash2 className='size-4 mr-2 text-destructive' /> Delete Course
                             </Link>
@@ -83,3 +84,33 @@ const AdminCourseCard = ({data}: AdminCourseCardProps) => {
 }
 
 export default AdminCourseCard
+
+export function AdminCourseCardSkelton(){
+    return(
+        <Card className='group relative py-0 gap-0'>
+            <div className='absolute top-2 right-2 z-10 flex items-center gap-2'>
+                <Skeleton className='h-6 w-16 rounded-full'/>
+                <Skeleton className='size-8 rounded-md'/>
+            </div>
+            <div className='relative w-full h-fit'>
+                <Skeleton className='w-full h-[250px] object-cover rounded-t-lg aspect-video '/>
+            </div>
+            <CardContent className='p-4'>
+                <Skeleton className='h-6 w-full'/>
+                <Skeleton className='h-6 w-full mt-2'/>
+                <Skeleton className='h-4 w-1/2 mt-2'/>
+                <div className='mt-4 flex items-center gap-x-5'>
+                    <div className='flex items-center gap-x-2'>
+                        <Skeleton className='size-6 p-1 rounded-md'/>
+                        <Skeleton className='h-4 w-16'/>
+                    </div>
+                    <div className='flex items-center gap-x-2'>
+                        <Skeleton className='size-6 p-1 rounded-md'/>
+                        <Skeleton className='h-4 w-16'/>
+                    </div>
+                </div>
+                <Skeleton className='h-8 w-full mt-4'/>
+            </CardContent>
+        </Card>
+    )
+}

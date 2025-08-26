@@ -43,6 +43,10 @@ export function NewLessonModal({courseId, chapterId}:{courseId:string,chapterId:
     }
     function handleOpenChange(open: boolean) {
         setIsOpen(open);
+
+        if(!open){
+            form.reset();
+        }
     }
     return(
         <Dialog open={isOpen} onOpenChange={handleOpenChange}>
