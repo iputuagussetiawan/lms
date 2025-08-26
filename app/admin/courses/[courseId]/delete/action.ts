@@ -1,11 +1,11 @@
 "use server";
 
 import { requireAdmin } from "@/app/data/admin/require-admin";
+import arcjet, {  fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
 import { APIResponse } from "@/lib/types";
-import { courseSchema, courseSchemaType } from "@/lib/zodSchemas";
-import arcjet, { fixedWindow } from "@/lib/arcjet"
 import { request } from "@arcjet/next";
+import { revalidatePath } from "next/cache";
 
 const aj=arcjet.withRule(
     fixedWindow({
@@ -15,7 +15,7 @@ const aj=arcjet.withRule(
     })
 )
 
-export async function CreateCourse(values:courseSchemaType):Promise<APIResponse>{
+export async function deleteCourse(courseId:string):Promise<APIResponse>{
     const session=await requireAdmin()
     try{
         const req=await request()
@@ -36,31 +36,22 @@ export async function CreateCourse(values:courseSchemaType):Promise<APIResponse>
                 }
             }
         }
-        const validation =courseSchema.safeParse(values);
+        await prisma.course.delete({
+            where: {
+                id:courseId,
+            },
+        })
 
-        if(!validation.success){
-            return {
-                status:"error",
-                message:"Invalid Form Data",
-            };
-        }
+        revalidatePath(`/admin/courses`);
 
-        await prisma.course.create({
-            data:{
-                ...validation.data,
-                userId:session?.user.id as string
-            }
-        });
-
-        return {
+        return{
             status:"success",
-            message:"Course Created Successfully",
+            message:"Course deleted successfully"
         }
-
     }catch{
         return{
             status:"error",
-            message:"Failed to create course",
+            message:"Failed to delete course"
         }
     }
 }

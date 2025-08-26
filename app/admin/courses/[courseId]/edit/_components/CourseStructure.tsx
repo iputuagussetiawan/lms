@@ -13,7 +13,7 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ChevronDown, ChevronRight, FileText, GripVertical, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronRight, Delete, FileText, GripVertical, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { listeners, title } from 'process';
 import React, { ReactNode, use, useEffect, useState } from 'react'
@@ -21,6 +21,10 @@ import { Chevron } from 'react-day-picker';
 import { toast } from 'sonner';
 import { set } from 'zod';
 import { reorderChapters, reorderLessons } from '../action';
+import { NewChapterModal } from './NewChapterModal';
+import { NewLessonModal } from './NewLessonModal';
+import { DeleteLesson } from './DeleteLesson';
+import { DeleteChapter } from './DeleteChapter';
 
 interface CourseStructureProps {
     data:AdminCourseSingularType;
@@ -273,6 +277,7 @@ const CourseStructure = ({data}:CourseStructureProps) => {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between border-b border-border">
                     <CardTitle>Chapters</CardTitle>
+                    <NewChapterModal courseId={data.id}/>
                 </CardHeader>
                 <CardContent className='space-y-8'>
                     <SortableContext items={items} strategy={verticalListSortingStrategy}>
@@ -304,9 +309,7 @@ const CourseStructure = ({data}:CourseStructureProps) => {
                                                     </CollapsibleTrigger>
                                                     <p className='cursor-pointer hover:text-primary pl-2'>{item.title}</p>
                                                 </div>
-                                                <Button size={"icon"} variant={"ghost"}>
-                                                    <Trash2 className="h-4 w-4"/>
-                                                </Button>
+                                                <DeleteChapter chapterId={item.id} courseId={data.id}/>
                                             </div>
                                             <CollapsibleContent>
                                                 <div className='p-1'>
@@ -333,18 +336,18 @@ const CourseStructure = ({data}:CourseStructureProps) => {
                                                                             <FileText className="h-4 w-4"/>
                                                                             <Link href={`/admin/courses/${data.id}/${item.id}/${lesson.id}`}>{lesson.title}</Link>
                                                                         </div>
-                                                                        <Button variant={"ghost"} size={"icon"}>
-                                                                            <Trash2 className="h-4 w-4"/>
-                                                                        </Button>
+                                                                        <DeleteLesson 
+                                                                            chapterId={item.id}  
+                                                                            courseId={data.id} 
+                                                                            lessonId={lesson.id}
+                                                                        />
                                                                     </div>
                                                                 )}
                                                             </SortableItem>
                                                         ))}
                                                     </SortableContext>
                                                     <div className='p-2'>
-                                                        <Button className='w-full' variant={"outline"}>
-                                                            Create New Lesson
-                                                        </Button>
+                                                        <NewLessonModal courseId={data.id} chapterId={item.id}/>
                                                     </div>
                                                 </div>
                                             </CollapsibleContent>
