@@ -3,7 +3,7 @@ import { requireAdmin } from "@/app/data/admin/require-admin";
 import { prisma } from "@/lib/db";
 import { APIResponse } from "@/lib/types";
 import { chapterSchema, chapterSchemaType, courseSchema, courseSchemaType, lessonSchema, lessonSchemaType } from "@/lib/zodSchemas";
-import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet"
+import arcjet, {fixedWindow } from "@/lib/arcjet"
 import { request } from "@arcjet/next";
 import { tryCatch } from "@/hooks/try-catch";
 import { revalidatePath } from "next/cache";
@@ -11,11 +11,6 @@ import { tr } from "zod/v4/locales";
 
 
 const aj=arcjet.withRule(
-    detectBot({
-        mode:"LIVE",
-        allow:[],
-    })
-).withRule(
     fixedWindow({
         mode:"LIVE",
         window:"1m",
