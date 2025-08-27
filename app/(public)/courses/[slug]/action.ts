@@ -43,6 +43,7 @@ export async function  enrollInCourseAction(courseId:string): Promise<APIRespons
                 title:true,
                 price:true,
                 slug:true,
+                stripePriceId:true
             }
         })
 
@@ -133,11 +134,11 @@ export async function  enrollInCourseAction(courseId:string): Promise<APIRespons
                 customer: stripeCustomerId,
                 line_items: [
                     {
-                        price:"price_1S0cAnLsIcVRMZhVQq2QYsBW",
+                        price:course.stripePriceId as string,
                         quantity: 1,
                     },
                 ],
-                mode: "subscription",
+                mode: "payment",
                 success_url: `${process.env.BETTER_AUTH_URL}/payment/success`,
                 cancel_url: `${process.env.BETTER_AUTH_URL}/payment/cancel`,
                 metadata: {

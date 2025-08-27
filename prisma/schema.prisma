@@ -93,6 +93,8 @@ model Course {
   price            Int
   duration         Int
   level            CourseLevel
+
+  stripePriceId    String @unique
   category         String
   smallDescription String
   slug             String      @unique
