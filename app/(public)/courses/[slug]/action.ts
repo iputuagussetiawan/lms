@@ -114,7 +114,7 @@ export async function  enrollInCourseAction(courseId:string): Promise<APIRespons
                         id: existingEnrollment.id
                     },  
                     data: {
-                        amount: course.price,
+                        amount: course.price/100,
                         status:"PENDING",
                         updatedAt: new Date()
                     }
@@ -124,7 +124,7 @@ export async function  enrollInCourseAction(courseId:string): Promise<APIRespons
                     data: {
                         userId: user.id,
                         courseId: course.id,
-                        amount: course.price,
+                        amount: course.price/100,
                         status:"PENDING"
                     }
                 })
