@@ -31,7 +31,17 @@ export async function getCourseSidebarData(slug:string) {
                             id: true,
                             title: true,
                             position: true,
-                            description: true
+                            description: true,
+                            lessonProgress:{
+                                where: {
+                                    userId: session.id
+                                },
+                                select: {
+                                    id: true,
+                                    lessonId: true,
+                                    completed: true,
+                                }
+                            }
                         },
                         orderBy: {
                             position: "asc", // ✅ order chapters by position

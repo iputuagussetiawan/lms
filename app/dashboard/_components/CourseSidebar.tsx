@@ -63,6 +63,9 @@ export function CourseSidebar({course}: CourseSidebarProps) {
                                     lesson={lesson} 
                                     slug={course.slug} 
                                     isActive={lesson.id === currentLessonId}
+                                    completed={lesson.lessonProgress.find(
+                                        (progress)=>progress.lessonId === lesson.id
+                                    )?.completed || false}
                                 />
                             ))}
                         </CollapsibleContent>
