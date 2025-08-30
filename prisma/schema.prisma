@@ -26,6 +26,7 @@ model User {
   accounts      Account[]
   courses       Course[] //one user many courses
   enrollment   Enrollment[]
+  lessonProgress LessonProgress[]
 
   stripeCustomerId String? @unique
 
@@ -148,6 +149,8 @@ model Lesson{
 
   chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   chapterId String
+
+  lessonProgress LessonProgress[]
 }
 
 
@@ -172,4 +175,18 @@ enum EnrollmentStatus {
   PENDING
   ACTIVE
   CANCELLED
+}
+
+model LessonProgress{
+  id String @id @default(uuid())
+  userId String
+  lessonId String
+  completed Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
 }
