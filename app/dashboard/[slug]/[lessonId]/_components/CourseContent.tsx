@@ -25,6 +25,7 @@ export function CourseContent({data}:CourseContentProps) {
             <div className="aspect-video relative bg-muted rounded-lg flex flex-col items-center justify-center overflow-hidden">
                 <video 
                     controls 
+                    autoPlay
                     className="w-full h-full object-cover"
                     poster={thumbnailUrl}
                 >
@@ -49,8 +50,8 @@ export function CourseContent({data}:CourseContentProps) {
                 </Button>
             </div>
 
-            <div>
-                <h1>
+            <div className="space-y-4 pt-4">
+                <h1 className="text-3xl font-semibold tracking-tight text-foreground">
                     {data.title}
                 </h1>
                 {data.description &&(
