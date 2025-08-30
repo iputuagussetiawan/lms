@@ -31,7 +31,6 @@ export function useCourseProgress({courseData}:CourseProgressProps):CourseProgre
             })
         })
 
-
         const progressPercentage=
             totalLessons>0
             ? Math.round((completedLessons/totalLessons)*100)
