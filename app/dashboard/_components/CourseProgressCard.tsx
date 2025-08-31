@@ -1,13 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 "use client";
 import { EnrolledCoursesType } from "@/app/data/user/get-enrolled-courses";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { useConstructsUrl } from "@/hooks/use-constructs-url";
-import { useCourseProgress } from "@/hooks/use-course-progress";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,7 +14,7 @@ interface CourseProgressCardProps{
 }
 export function CourseProgressCard({data}: CourseProgressCardProps){
     const thumbnailUrl=useConstructsUrl(data.course.fileKey);
-    const {totalLessons, completedLessons, progressPercentage}=useCourseProgress({courseData: data.course as any});
+    // const {totalLessons, completedLessons, progressPercentage}=useCourseProgress({courseData: data.course});
     return (
         <Card className="group relative py-0 gap-0">
             <Badge className="absolute top-2 right-2 z-10">{data.course.level}</Badge>
@@ -32,14 +30,14 @@ export function CourseProgressCard({data}: CourseProgressCardProps){
                     <h3 className="font-medium text-lg line-clamp-2 group-hover:text-primary transition-colors">{data.course.title}</h3>
                 </Link>
                 <p className="mt-2 line-clamp-2 text-sm text-muted-foreground leading-tight">{data.course.smallDescription}</p>
-                <div className="space-y-4 mt-5">
+                {/* <div className="space-y-4 mt-5">
                     <div className="flex items-center justify-between mb-1 text-sm">
                         <p>Progress:</p>
                         <p className="font-medium">{progressPercentage}%</p>
                     </div>
                     <Progress className="h-1.5" value={progressPercentage} />
                     <p className="text-xs text-muted-foreground mt-1">{completedLessons}/{totalLessons} Lessons</p>
-                </div>
+                </div> */}
                 <Link href={`/dashboard/${data.course.slug}`} className={buttonVariants({ size: "sm", className: "mt-4 w-full" })}>View Course</Link>
             </CardContent>
         </Card>

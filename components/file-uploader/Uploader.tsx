@@ -40,30 +40,8 @@ const Uploader = ({onChange, value, fileTypeAccepted}:UploaderProps) => {
         key:value,
         objectUrl:value ? fileUrl : undefined
     });
-    const onDrop = useCallback((acceptedFiles:File[]) => {
-        // Do something with the files
-        if(acceptedFiles.length>0) {
-            const file = acceptedFiles[0];
 
-            if(fileState.objectUrl && !fileState.objectUrl.startsWith('http')){
-                URL.revokeObjectURL(fileState.objectUrl);
-            }
-            setFileState({
-                file:file,
-                uploading:false,
-                progress:0,
-                objectUrl:URL.createObjectURL(file),
-                error:false,
-                id:uuidv4(),
-                isDeleting:false,
-                fileType:fileTypeAccepted
-            });
-            uploadFile(file);
-        }
-    }, [fileState.objectUrl, fileTypeAccepted]);
-
-
-    const uploadFile=useCallback(
+     const uploadFile=useCallback(
         async(file:File)=>{
                 setFileState((prev)=>({
                 ...prev,
@@ -145,6 +123,28 @@ const Uploader = ({onChange, value, fileTypeAccepted}:UploaderProps) => {
         }, 
         [fileTypeAccepted, onChange]
     )
+    const onDrop = useCallback((acceptedFiles:File[]) => {
+        // Do something with the files
+        if(acceptedFiles.length>0) {
+            const file = acceptedFiles[0];
+
+            if(fileState.objectUrl && !fileState.objectUrl.startsWith('http')){
+                URL.revokeObjectURL(fileState.objectUrl);
+            }
+            setFileState({
+                file:file,
+                uploading:false,
+                progress:0,
+                objectUrl:URL.createObjectURL(file),
+                error:false,
+                id:uuidv4(),
+                isDeleting:false,
+                fileType:fileTypeAccepted
+            });
+            uploadFile(file);
+        }
+    }, [fileState.objectUrl, fileTypeAccepted]);
+
 
     // async function uploadFile(file:File) {
     //     setFileState((prev)=>({
