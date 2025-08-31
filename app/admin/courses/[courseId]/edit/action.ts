@@ -5,6 +5,7 @@ import { APIResponse } from "@/lib/types";
 import { chapterSchema, chapterSchemaType, courseSchema, courseSchemaType, lessonSchema, lessonSchemaType } from "@/lib/zodSchemas";
 import arcjet, {fixedWindow } from "@/lib/arcjet"
 import { request } from "@arcjet/next";
+import { revalidatePath } from "next/cache";
 
 
 
