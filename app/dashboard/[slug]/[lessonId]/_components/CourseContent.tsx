@@ -1,6 +1,5 @@
 "use client";
 import { LessonContentType } from "@/app/data/course/get-lesson-content";
-import { RenderDescription } from "@/components/rich-text-editor/RenderDescription";
 import { Button } from "@/components/ui/button";
 import { tryCatch } from "@/hooks/try-catch";
 import { useConstructsUrl } from "@/hooks/use-constructs-url";
@@ -96,9 +95,9 @@ export function CourseContent({data}:CourseContentProps) {
                 <h1 className="text-3xl font-semibold tracking-tight text-foreground">
                     {data.title}
                 </h1>
-                {data.description &&(
+                {/* {data.description &&(
                     <RenderDescription json={JSON.parse(data.description)} />
-                )}
+                )} */}
             </div>
         </div>
     );

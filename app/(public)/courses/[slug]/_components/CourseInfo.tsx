@@ -1,4 +1,4 @@
-import { RenderDescription } from "@/components/rich-text-editor/RenderDescription";
+
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -64,7 +64,7 @@ const CourseInfo = ({course, isEnrolled}:CourseInfoProps) => {
                     <Separator className="my-4"/>
                     <div className="space-y-6"> 
                         <h2 className="text-3xl font-semibold tracking-tight">Course Description</h2>
-                        <RenderDescription json={JSON.parse(course.description)}/>
+                        {/* <RenderDescription json={JSON.parse(course.description)}/> */}
                     </div>
                 </div>
                 <div className="mt-12 space-y-6">
