@@ -51,6 +51,7 @@
     "@t3-oss/env-nextjs": "^0.13.8",
     "@tabler/icons-react": "^3.34.0",
     "@tanstack/react-table": "^8.21.3",
+    "@tiptap/core": "^3.3.0",
     "@tiptap/extension-text-align": "^2.24.0",
     "@tiptap/html": "^3.3.0",
     "@tiptap/pm": "^2.24.0",
