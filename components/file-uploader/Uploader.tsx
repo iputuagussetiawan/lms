@@ -133,7 +133,7 @@ const Uploader = ({onChange, value, fileTypeAccepted}:UploaderProps) => {
                     xhr.setRequestHeader("Content-Type", file.type);
                     xhr.send(file);
                 });
-            } catch (error) {
+            } catch {
                 toast.error("something went wrong");
                 setFileState((prev)=>({
                     ...prev,

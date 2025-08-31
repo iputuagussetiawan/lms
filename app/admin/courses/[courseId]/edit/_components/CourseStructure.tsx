@@ -13,13 +13,10 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ChevronDown, ChevronRight, Delete, FileText, GripVertical, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronRight, FileText, GripVertical } from 'lucide-react';
 import Link from 'next/link';
-import { listeners, title } from 'process';
-import React, { ReactNode, use, useEffect, useState } from 'react'
-import { Chevron } from 'react-day-picker';
+import React, { ReactNode, useEffect, useState } from 'react'
 import { toast } from 'sonner';
-import { set } from 'zod';
 import { reorderChapters, reorderLessons } from '../action';
 import { NewChapterModal } from './NewChapterModal';
 import { NewLessonModal } from './NewLessonModal';

@@ -5,9 +5,7 @@ import { APIResponse } from "@/lib/types";
 import { chapterSchema, chapterSchemaType, courseSchema, courseSchemaType, lessonSchema, lessonSchemaType } from "@/lib/zodSchemas";
 import arcjet, {fixedWindow } from "@/lib/arcjet"
 import { request } from "@arcjet/next";
-import { tryCatch } from "@/hooks/try-catch";
-import { revalidatePath } from "next/cache";
-import { tr } from "zod/v4/locales";
+
 
 
 const aj=arcjet.withRule(

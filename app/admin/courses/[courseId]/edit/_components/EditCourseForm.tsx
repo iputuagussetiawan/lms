@@ -10,8 +10,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { tryCatch } from '@/hooks/try-catch';
 import { courseCategories, courseLevels, courseSchema, courseSchemaType, courseStatus } from '@/lib/zodSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2, PencilIcon, PlusIcon, SparkleIcon } from 'lucide-react';
-import { startTransition, useTransition } from 'react';
+import { Loader2, PencilIcon, SparkleIcon } from 'lucide-react';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form'
 import slugify from 'slugify';
 import { toast } from 'sonner';

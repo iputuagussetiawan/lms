@@ -10,13 +10,13 @@ import { Input } from "@/components/ui/input";
 import { tryCatch } from "@/hooks/try-catch";
 import { lessonSchema, lessonSchemaType } from "@/lib/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Arrow } from "@radix-ui/react-select";
-import { ArrowLeft, Loader2, PlusIcon } from "lucide-react";
+
+import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { startTransition, useTransition } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { fi } from "zod/v4/locales";
+
 import { updateLesson } from "../actions";
 
 interface LessonFormProps {
