@@ -1,3 +1,4 @@
+"use client";
 import { getCourseDetail } from "@/app/data/course/get-course";
 import { RenderDescription } from "@/components/rich-text-editor/RenderDescription";
 import { Badge } from "@/components/ui/badge";
