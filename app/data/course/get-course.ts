@@ -44,3 +44,5 @@ export async function getCourseDetail(slug:string){
     }
     return course
 }
+
+export type CourseDetailType = Awaited<ReturnType<typeof getCourseDetail>>
