@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { Editor, EditorContent, useEditor } from '@tiptap/react'
+import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Menubar from './Menubar'
 import TextAlign from '@tiptap/extension-text-align'

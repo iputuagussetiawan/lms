@@ -4,10 +4,10 @@ import { Card, CardContent } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useConstructsUrl } from '@/hooks/use-constructs-url'
-import { ArrowRight, ArrowRightIcon, Eye, MoreVerticalIcon, PencilIcon, School, TimerIcon, Trash2 } from 'lucide-react'
+import { ArrowRightIcon, Eye, MoreVerticalIcon, PencilIcon, School, TimerIcon, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { use } from 'react'
+
 
 
 interface  AdminCourseCardProps {

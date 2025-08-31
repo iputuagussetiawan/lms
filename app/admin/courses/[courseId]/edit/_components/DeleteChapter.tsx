@@ -1,10 +1,10 @@
-import { Alert } from "@/components/ui/alert";
+
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { tryCatch } from "@/hooks/try-catch";
 import { Loader2, Trash2 } from "lucide-react";
 import { useState, useTransition } from "react";
-import { deleteChapter, deleteLesson } from "../action";
+import { deleteChapter } from "../action";
 import { toast } from "sonner";
 
 export function DeleteChapter({
