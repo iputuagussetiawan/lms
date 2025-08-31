@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 "use client";
 import { EnrolledCoursesType } from "@/app/data/user/get-enrolled-courses";
 import { Badge } from "@/components/ui/badge";
