@@ -2,11 +2,10 @@ import { getCourseSidebarData } from "@/app/data/course/get-course-sidebar-data"
 import { redirect } from "next/navigation";
 
 interface CourseSlugPageProps {
-    params:Promise<{slug:string}>;
-    children:React.ReactNode
+    params: { slug: string };
 }
 export default async function CourseSlugPage({params}:CourseSlugPageProps) {
-    const {slug}= await params
+    const {slug}= params
     const course = await getCourseSidebarData(slug);
     // ✅ safely check if chapters exist
     const firstChapter = course?.course?.chapter?.[0];
