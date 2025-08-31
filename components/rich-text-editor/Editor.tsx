@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -8,7 +9,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import type { ControllerRenderProps } from "react-hook-form";
 
 interface RichTextEditorProps {
-  field: ControllerRenderProps<any, string>; // type-safe field from RHF
+  field: ControllerRenderProps<any, string>;
 }
 
 const RichTextEditor = ({ field }: RichTextEditorProps) => {
