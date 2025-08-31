@@ -2,7 +2,7 @@
 
 import { AdminLessonType } from "@/app/data/admin/admin-get-lesson"
 import Uploader from "@/components/file-uploader/Uploader";
-import RichTextEditor from "@/components/rich-text-editor/Editor";
+// import RichTextEditor from "@/components/rich-text-editor/Editor";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -95,12 +95,25 @@ export function LessonForm({chapterId, data, courseId}: LessonFormProps) {
                                     <FormItem>
                                         <FormLabel>Description</FormLabel>
                                         <FormControl>
-                                            <RichTextEditor field={field} />
+                                            <Input placeholder="Description" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
+                            {/* <FormField
+                                control={form.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Description</FormLabel>
+                                        <FormControl>
+                                            <RichTextEditor field={field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            /> */}
                             <FormField
                                 control={form.control}
                                 name="thumbnailKey"

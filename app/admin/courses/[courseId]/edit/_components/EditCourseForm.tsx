@@ -1,7 +1,7 @@
 "use client";
 
 import Uploader from '@/components/file-uploader/Uploader';
-import RichTextEditor from '@/components/rich-text-editor/Editor';
+// import RichTextEditor from '@/components/rich-text-editor/Editor';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
@@ -126,18 +126,32 @@ export function EditCourseForm({data}: EditCourseFormProps) {
 
                 <FormField
                     control={form.control}
+                    name="smallDescription"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                                <Textarea className='min-h-[120px]' placeholder="=Description" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                {/* <FormField
+                    control={form.control}
                     name="description"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
                                 <RichTextEditor field={field}/>
-                                {/* <Textarea className='min-h-[120px]' placeholder="Description" {...field} /> */}
+                                
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
-                />
+                /> */}
 
                 <FormField
                     control={form.control}

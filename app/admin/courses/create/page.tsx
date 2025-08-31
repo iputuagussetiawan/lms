@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form'
 import slugify from 'slugify'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import RichTextEditor from '@/components/rich-text-editor/Editor'
+// import RichTextEditor from '@/components/rich-text-editor/Editor'
 import Uploader from '@/components/file-uploader/Uploader'
 import { tryCatch } from '@/hooks/try-catch'
 import { CreateCourse } from './actions'
@@ -147,8 +147,8 @@ const CreateCoursePage = () => {
                                     <FormItem>
                                         <FormLabel>Description</FormLabel>
                                         <FormControl>
-                                            <RichTextEditor field={field}/>
-                                            {/* <Textarea className='min-h-[120px]' placeholder="Description" {...field} /> */}
+                                            {/* <RichTextEditor field={field}/> */}
+                                            <Textarea className='min-h-[120px]' placeholder="Description" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
