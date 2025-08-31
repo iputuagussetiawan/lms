@@ -3,7 +3,7 @@
 
 import React from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
-
+import StarterKit from "@tiptap/starter-kit";
 import Menubar from "./Menubar";
 import TextAlign from "@tiptap/extension-text-align";
 import type { ControllerRenderProps } from "react-hook-form";
@@ -15,6 +15,7 @@ interface RichTextEditorProps {
 const RichTextEditor = ({ field }: RichTextEditorProps) => {
   const editor = useEditor({
     extensions: [
+      StarterKit,
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
