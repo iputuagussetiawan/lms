@@ -9,7 +9,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import type { ControllerRenderProps } from "react-hook-form";
 
 interface RichTextEditorProps {
-  field: ControllerRenderProps<any, string>;
+  field: ControllerRenderProps<any>;
 }
 
 const RichTextEditor = ({ field }: RichTextEditorProps) => {
