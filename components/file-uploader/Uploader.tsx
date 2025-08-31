@@ -41,7 +41,7 @@ const Uploader = ({onChange, value, fileTypeAccepted}:UploaderProps) => {
         objectUrl:value ? fileUrl : undefined
     });
 
-     const uploadFile=useCallback(
+    const uploadFile=useCallback(
         async(file:File)=>{
                 setFileState((prev)=>({
                 ...prev,
