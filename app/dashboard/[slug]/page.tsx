@@ -1,11 +1,5 @@
 import { getCourseSidebarData } from "@/app/data/course/get-course-sidebar-data";
 import { redirect } from "next/navigation";
-
-interface CourseSlugPageProps {
-    params:Promise<{slug:string}>;
-    children:React.ReactNode
-}
-
 type Params=Promise<{
     slug:string;
 }>
