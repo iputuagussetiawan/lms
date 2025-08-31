@@ -5,7 +5,11 @@ interface CourseSlugPageProps {
     params:Promise<{slug:string}>;
     children:React.ReactNode
 }
-export default async function CourseSlugPage({params}:CourseSlugPageProps) {
+
+type Params=Promise<{
+    slug:string;
+}>
+export default async function CourseSlugPage({params}:{params:Params}) {
     const {slug}= await params
     const course = await getCourseSidebarData(slug);
     // ✅ safely check if chapters exist
