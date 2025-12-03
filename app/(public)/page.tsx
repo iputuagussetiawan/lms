@@ -3,6 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, ChartBar, Gamepad2, GroupIcon } from "lucide-react";
 import Link from "next/link";
+import UserButton from "./_components/UserButton";
 
 interface featureProps{
     title:string,
@@ -47,10 +48,8 @@ export default function Home() {
                     <p className="max-wh-[700px] text-muted-foreground md:text-xl">
                         Discover a new why to learn with our modern, interactive Learning Management System. Access hight-quality courses anytime, anywhere, on any device. Join our vibrant community of learners and unlock a world of knowledge. Start your learning journey today!
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                        <Link className={buttonVariants({ size: "lg" })} href="/courses">Explore Courses</Link>
-                        <Link className={buttonVariants({ size: "lg", variant: "outline" })} href="/login">Sign in</Link>
-                    </div>
+                    
+                        <UserButton/>
                 </div>
             </section>
 
