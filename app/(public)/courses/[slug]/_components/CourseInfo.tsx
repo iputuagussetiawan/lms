@@ -225,7 +225,7 @@ const CourseInfo = ({course, isEnrolled}:CourseInfoProps) => {
                             {
                                 isEnrolled ? (
                                     <Link 
-                                        href={`/courses/${course.slug}`} 
+                                        href={`/dashboard/${course.slug}`} 
                                         className={buttonVariants({ size: "lg", className: "w-full" })}
                                     >
                                         Watch Course
