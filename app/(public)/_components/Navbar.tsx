@@ -10,7 +10,6 @@ import { UserDropdown } from './user-dropdown'
 
 // FIX 1: Define the correct structure for navigationItems
 const navigationItems = [
-    { name: 'Dashboard', href: '/admin' },
     { name: 'Courses', href: '/courses' },
     // Add more items here as needed
 ] 

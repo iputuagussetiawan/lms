@@ -59,15 +59,9 @@ export function UserDropdown({name, email, image}: UserDropdownProps) {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
-                        <Link href="/">
-                            <HomeIcon size={16} className="opacity-60" aria-hidden="true" />
-                            <span>Home</span>
-                        </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                        <Link href="/course">
+                        <Link href="/dashboard">
                             <BookOpenIcon size={16} className="opacity-60" aria-hidden="true" />
-                            <span>Courses</span>
+                            <span>My Courses</span>
                         </Link>
                     </DropdownMenuItem>
 
